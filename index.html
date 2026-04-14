@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown to Feb 15, 2030</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    #countdown {
+      font-size: 4rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown"></div>
+
+  <script>
+    function calculateDifference() {
+      const now = new Date();
+      const target = new Date('2030-02-15T00:00:00');
+
+      let years = target.getFullYear() - now.getFullYear();
+      let months = target.getMonth() - now.getMonth();
+      let days = target.getDate() - now.getDate();
+
+      if (days < 0) {
+        months--;
+        const prevMonth = new Date(target.getFullYear(), target.getMonth(), 0);
+        days += prevMonth.getDate();
+      }
+
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      return { years, months, days };
+    }
+
+    function updateCountdown() {
+      const diff = calculateDifference();
+      const el = document.getElementById('countdown');
+
+      el.textContent = `${diff.years} years, ${diff.months} months, ${diff.days} days left`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000 * 60 * 60);
+  </script>
+</body>
+</html>
